@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totally Normal Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+        }
+        .question-box {
+            font-size: 24px;
+            margin: 20px auto;
+        }
+        .answer-button {
+            display: block;
+            width: 60%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 18px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .answer-button:hover {
+            background-color: darkgreen;
+        }
+        #next-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 18px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>inteligence Quiz</h1>
+    <div id="quiz-container">
+        <p id="question" class="question-box"></p>
+        <div id="answer-buttons"></div>
+        <button id="next-button" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        let questions = [
+            { question: "What is the most delicious color?", answers: ["Spoons", "Five", "Antarctica", "Yellow pants"], correct: 1 },
+            { question: "Which vegetable is secretly plotting to take over the world?", answers: ["Rectangle", "Distinct Shrek", "Pizza", "A sentient piece of cheese"], correct: 0 },
+            { question: "If you were a supervillain, what would be your weapon of choice?", answers: ["Your grandma’s WiFi password", "Frogs", "Metal shoe launcher", "A jar of angry pickles"], correct: 2 },
+            { question: "What’s the best way to communicate with aliens?", answers: ["Quantum spaghetti", "Communicating", "A giraffe with a vendetta", "Cursed algebra homework"], correct: 1 },
+            { question: "What’s the one thing you can never leave the house without?", answers: ["Clothes", "One singular toenail", "A microwave full of jellybeans", "The smell of disappointment"], correct: 0 },
+            { question: "Which animal has the best fashion sense?", answers: ["The last brain cell at 3 AM", "Roomba bomber", "M1911", "A WiFi network with no password but infinite suffering"], correct: 2 },
+            { question: "If you could only eat one type of cereal for the rest of your life, what would it be?", answers: ["A time-traveling sock", "Rice", "Pizza", "A penguin who knows a dark secret"], correct: 2 },
+            { question: "What is the most advanced form of transportation?", answers: ["A Dorito with TSA clearance", "Apple", "Time travel", "Drowning"], correct: 3 },
+            { question: "How many pizzas can one human eat in a single sitting?", answers: ["Haunted USB drive", "Pokémon gotta catch them all", "Over 9,000", "A raccoon hotwiring a Honda"], correct: 2 },
+            { question: "If you could turn anything into gold, what would you turn first?", answers: ["A sword made of solidified cringe", "Idfk the ground?", "Your Mom", "A tactical banana"], correct: 1 },
+            { question: "What is the greatest invention of the 21st century?", answers: ["Flying pigs", "A dolphin lawyer", "An aggressive spaghetti swarm", "A Walmart parking lot at 2 AM"], correct: 0 },
+            { question: "If time travel existed, which historical event would you interrupt first?", answers: ["D-day", "Barney’s ass", "9/11", "Dora"], correct: 2 },
+            { question: "What is the most powerful shape in geometry?", answers: ["Triangle", "Square", "Squidward", "Circle"], correct: 2 },
+            { question: "If you could live inside any movie, which one would it be?", answers: ["Avengers", "Supernatural", "The Matrix", "Batman Begins"], correct: 1 },
+            { question: "What is the best sound in the world?", answers: ["Thunder", "Nuke", "Birds chirping", "Car engine starting"], correct: 1 },
+            { question: "If you had to choose between flying or invisibility, which would you pick?", answers: ["Invisibility", "Flying", "Strength", "Speed"], correct: 2 },
+            { question: "What’s the most overrated food in the world?", answers: ["A car that only drives backwards", "Legalized Nuclear bomb", "Hamburger", "A pigeon in a tiny suit"], correct: 1 },
+            { question: "Which song is the secret anthem of the universe?", answers: ["Bohemian Rhapsody", "Fortunate Son", "Sweet Child O' Mine", "Stairway to Heaven"], correct: 1 },
+            { question: "What is the most peaceful place on Earth?", answers: ["Regret in physical form", "A Walmart parking lot at 2 AM", "A feral Subway", "Most dangerous place on Earth"], correct: 3 },
+            { question: "If you could communicate with only one type of animal, which would it be?", answers: ["A blind goose who steals lawn ornaments", "The collective sigh of stubbed toes", "A cursed bottle of Mountain Dew", "Dinosaur"], correct: 3 }
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            let q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            let answerButtons = document.getElementById("answer-buttons");
+            answerButtons.innerHTML = "";
+            q.answers.forEach((answer, index) => {
+                let button = document.createElement("button");
+                button.innerText = answer;
+                button.className = "answer-button";
+                button.onclick = () => checkAnswer(index);
+                answerButtons.appendChild(button);
+            });
+            document.getElementById("next-button").style.display = "none";
+        }
+
+        function checkAnswer(index) {
+            let correctIndex = questions[currentQuestion].correct;
+            if (index !== correctIndex) {
+                showPopup();
+                alert("Wrong! Correct answer: " + questions[currentQuestion].answers[correctIndex]);
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function showPopup() {
+            alert("They are always watching us... SOOOOOOOOOOOAP\n(Click OK to close)");
+            window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+        }
+
+        function endQuiz() {
+            let choice = confirm("Choose wisely:\nOK = Restart Quiz\nCancel = nothing you stupid idiot");
+            if (!choice) {
+                alert("CONGRATS IDIOT YOU HAVE BEEN PRANKED BY PHOG >:) LOLOLOLOL GET TROLLED BITCH!");
+                window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+            } else {
+                currentQuestion = 0;
+                loadQuestion();
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
